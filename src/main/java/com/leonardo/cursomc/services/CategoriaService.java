@@ -5,20 +5,17 @@ import org.springframework.stereotype.Service;
 
 import com.leonardo.cursomc.domain.Categoria;
 import com.leonardo.cursomc.repositories.CategoriaRepository;
-
-import net.bytebuddy.dynamic.DynamicType.Builder.FieldDefinition.Optional;
-
+import com.leonardo.cursomc.services.exceptions.ObjectNotFoundException;
 
 @Service
 public class CategoriaService {
 	
 	@Autowired
 	private CategoriaRepository repo;
+	public Categoria find(Integer id) {
+		return repo.findById(id).orElseThrow(() -> new ObjectNotFoundException(
+		"Objeto não encontrado! Id: " + id + ", Tipo: " + Categoria.class.getName()));
+		}
 	
-	public Object buscar(Integer id) {
-		Object obj = repo.findById(id);
-		return obj;
-		
-	}
 
 }
